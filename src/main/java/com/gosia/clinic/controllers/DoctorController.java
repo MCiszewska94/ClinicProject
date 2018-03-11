@@ -4,6 +4,7 @@ import com.gosia.clinic.model.Doctor;
 import com.gosia.clinic.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class DoctorController {
         this.doctorService = doctorService;
     }
 
-    @RequestMapping(name = "/doctors",method = RequestMethod.GET)
+    @RequestMapping(name = "/doctors", method = RequestMethod.GET)
     public List<Doctor> getAll() {
         return doctorService.getAllDoctors();
     }
@@ -33,8 +34,12 @@ public class DoctorController {
     }
 
     @RequestMapping(name = "/doctors", method = RequestMethod.POST)
-    public void addDoctor(@RequestBody Doctor d) {
-        doctorService.addDoctor(d);
+    public ResponseEntity addDoctor(@RequestBody Doctor d) {
+        if (doctorService.addDoctor(d)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(name = "/doctors/{doctorId}", method = RequestMethod.PUT)
