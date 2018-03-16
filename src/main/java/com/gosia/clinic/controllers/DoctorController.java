@@ -4,7 +4,6 @@ import com.gosia.clinic.model.Doctor;
 import com.gosia.clinic.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +17,11 @@ public class DoctorController {
     @Autowired
     public DoctorController(DoctorService doctorService) {
         this.doctorService = doctorService;
+    }
+
+    @RequestMapping("/")
+    public String hello() {
+        return "Hello from my Spring boot app";
     }
 
     @RequestMapping(name = "/doctors", method = RequestMethod.GET)
