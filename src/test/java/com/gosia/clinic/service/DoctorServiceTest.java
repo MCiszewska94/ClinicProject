@@ -1,40 +1,23 @@
 package com.gosia.clinic.service;
 
-import com.gosia.clinic.daos.DoctorDAO;
 import com.gosia.clinic.model.Doctor;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.sql.DataSource;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
+@Sql(scripts = "classpath:create-table.sql")
 public class DoctorServiceTest {
-
-    private static EmbeddedDatabase db;
 
     @Autowired
     private DoctorService doctorService;
-
-    @BeforeClass
-    public static void setUp() {
-        db = new EmbeddedDatabaseBuilder()
-                .setType(EmbeddedDatabaseType.H2)
-                .addScript("create-table.sql")
-                .build();
-    }
 
     @Test
     public void shouldReturnDoctors() {
@@ -74,15 +57,10 @@ public class DoctorServiceTest {
     }
 
 
-
     @Test
     public void shouldNotDeleteDoctorOfNotExistingId() {
         Assert.assertFalse(doctorService.deleteDoctor(666));
     }
 
-    @AfterClass
-    public static void tearDown() {
-        db.shutdown();
-    }
 
 }
