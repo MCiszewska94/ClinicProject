@@ -8,5 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface DoctorDAO extends CrudRepository<Doctor, Integer> {
-    Optional<Integer> getDoctorIdByFirstNameAndLastName(String firstName, String lastName);
 }
