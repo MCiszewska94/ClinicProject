@@ -39,28 +39,20 @@ public class DoctorController {
 
     @RequestMapping(name = "/doctors", method = RequestMethod.POST)
     public ResponseEntity addDoctor(@RequestBody Doctor d) {
-        if (doctorService.addDoctor(d)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
+        return doctorService.addDoctor(d) ?
+                new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
+
     }
 
     @RequestMapping(name = "/doctors/{doctorId}", method = RequestMethod.PUT)
     public ResponseEntity updateDoctor(@PathVariable Integer doctorId, @RequestBody Doctor d) {
-        if (doctorService.updateDoctor(doctorId, d)) {
-            return new ResponseEntity(HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
+        return doctorService.updateDoctor(doctorId, d) ?
+                new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(name = "/doctors/{doctorId}", method = RequestMethod.DELETE)
     public ResponseEntity deleteDoctor(@PathVariable Integer doctorId) {
-        if (doctorService.deleteDoctor(doctorId)) {
-            return new ResponseEntity(HttpStatus.OK);
-        } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
+        return doctorService.deleteDoctor(doctorId) ?
+                new ResponseEntity(HttpStatus.OK) : new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 }
